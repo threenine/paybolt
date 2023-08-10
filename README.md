@@ -1,6 +1,8 @@
 # C# Bitcoin Lightning Network Client
 <div align="center" style="text-align: center">
 
-    <img src="PayBolt.svg" alt="PayBolt lightning client">
+   <a href="https://paybolt.dev">
+    <img src="PayBolt.png.png" alt="Paybolt C# Lightning client">
+  </a>
   
 </div>
