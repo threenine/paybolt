@@ -1,0 +1,21 @@
+<Project>
+    <PropertyGroup>
+        <Authors>threenine.co.uk</Authors>
+        <TargetFramework>net7.0</TargetFramework>
+        <Title>PayBolt</Title>
+        <Description>Bitcoin Lightning Network Payment library</Description>
+        <RepositoryType>git</RepositoryType>
+        <PackageTags>bitcoin, lightning</PackageTags>
+        <RepositoryUrl>https://github.com/threenine/paybolt</RepositoryUrl>
+        <Copyright>Copyright © $([System.DateTime]::Now.ToString("yyyy")) Three Nine Consulting Limited</Copyright>
+        <PackageProjectUrl>https://www.threenine.co.uk/paybolt</PackageProjectUrl>
+        <license>https://github.com/threenine/paybolt/blob/master/LICENSE</license>
+        <PackageIcon>PayBolt.png</PackageIcon>
+        <Version></Version>
+    </PropertyGroup>
+    <ItemGroup>
+        <Content Include="$(MSBuildThisFileDirectory)PayBolt.png" Pack="true" PackagePath="/">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+    </ItemGroup>
+</Project>
