@@ -6,6 +6,7 @@ namespace PayBolt.DependencyInjection;
 public static class ByteExtensions
 {
     private const string DASH = "-";
+    private const string COLON = ":";
     public static string ToBitString(this byte[] source)
     {
       if(source.Length <= 0) return  string.Empty;
@@ -21,7 +22,7 @@ public static class ByteExtensions
         if (string.IsNullOrEmpty(source)) return Array.Empty<byte>();
        
 
-        source = source.Replace(":", string.Empty);
+        source = source.Replace(COLON, string.Empty);
 
         var numberChars = source.Length;
         var bytes = new byte[numberChars / 2];
