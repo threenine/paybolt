@@ -1,2 +1,2 @@
-A C# Lightning Network client
+# C# Bitcoin Lightning Network Client
 
