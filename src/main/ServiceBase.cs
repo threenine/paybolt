@@ -2,7 +2,6 @@
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using System.Web;
 using BoltPay.Authentication;
 
 namespace BoltPay;
@@ -20,22 +19,38 @@ public abstract class ServiceBase
         _authentication = authentication;
     }
    
+   /// <summary>
+   /// 
+   /// </summary>
+   /// <param name="url"></param>
+   /// <typeparam name="TResponse"></typeparam>
+   /// <returns></returns>
     public async Task<TResponse> Get<TResponse>(string url) where TResponse : class
     {
+        //TODO: Add Guard clauses
         return await Request<TResponse>(HttpMethod.Get, url);
     }
    
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="method"></param>
+    /// <param name="query"></param>
+    /// <param name="body"></param>
+    /// <param name="formUrlEncoded"></param>
+    /// <typeparam name="TResponse"></typeparam>
+    /// <returns></returns>
+    /// <exception cref="InvalidOperationException"></exception>
     public async Task<TResponse> Request<TResponse>(HttpMethod method,
         string query,
         object? body = null,
         bool  formUrlEncoded = false)
         where TResponse : class
     {
-
-        
+        // TODO: Add Guard clauses
         try
         {
-            var request = BuildRequestMessage(method,  BuildUri(query) , body);
+            var request = BuildRequestMessage(method,  BuildUri(query) , body, formUrlEncoded);
             await _authentication.AddAuthentication(_client, request);
             var response = await _client.SendAsync(request);
 
@@ -54,9 +69,6 @@ public abstract class ServiceBase
             Console.WriteLine(e);
             throw;
         }
-      
-       
-        
     }
     
    /// <summary>
@@ -74,16 +86,36 @@ public abstract class ServiceBase
         return new Uri(query);
     }
    
+  /// <summary>
+  /// 
+  /// </summary>
+  /// <param name="method"></param>
+  /// <param name="url"></param>
+  /// <param name="body"></param>
+  /// <param name="formUrlEncoded"></param>
+  /// <returns></returns>
    private HttpRequestMessage BuildRequestMessage(HttpMethod method, Uri url, object? body,  bool  formUrlEncoded = false)
    {
       return body == null ? new HttpRequestMessage(method, url) : new HttpRequestMessage(method, url) {Content = BuildContent(body, formUrlEncoded)};
    }
    
-   private HttpContent BuildContent(object body, bool formUrlEncoded)
+  /// <summary>
+  /// 
+  /// </summary>
+  /// <param name="body"></param>
+  /// <param name="formUrlEncoded"></param>
+  /// <returns></returns>
+  private HttpContent BuildContent(object body, bool formUrlEncoded)
    {
        return formUrlEncoded ? BuildEncodedContent(body) : BuildJsonContent(body);
    }
-   private FormUrlEncodedContent BuildEncodedContent(object body)
+  
+  /// <summary>
+  /// 
+  /// </summary>
+  /// <param name="body"></param>
+  /// <returns></returns>
+  private FormUrlEncodedContent BuildEncodedContent(object body)
    {
        var parameters = new Dictionary<string, string>();
        
@@ -96,12 +128,15 @@ public abstract class ServiceBase
 
          return new FormUrlEncodedContent(parameters);
    }
-   
-   private StringContent BuildJsonContent(object? body)
+    
+  
+  /// <summary>
+  /// 
+  /// </summary>
+  /// <param name="body"></param>
+  /// <returns></returns>
+  private StringContent BuildJsonContent(object? body)
    {
        return new StringContent(JsonSerializer.Serialize(body), Encoding.UTF8, MediaTypeNames.Application.Json);
    }
-   
-   
-
 }
