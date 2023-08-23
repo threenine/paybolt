@@ -2,11 +2,11 @@ using System.ComponentModel;
 using System.Net.Security;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
-using Models.Http;
+using BoltPay.Http;
 using PayBolt.DependencyInjection;
 using Shouldly;
 
-namespace PayBolt.Tests;
+namespace BoltPay.Tests;
 
 public class DependencyInjectionTests
 {
@@ -59,7 +59,12 @@ public class DependencyInjectionTests
         expected.ShouldBeTrue();
     }
     
-    
+    [Fact, Description("Should build a valid Uri string")]
+    public void Should_Build_Valid_Uri()
+    {
+       var testUrl = "https://test.com";
+       
+    }
     
     private X509Certificate2 BuildSelfSignedCertificate()
     {
@@ -71,9 +76,7 @@ public class DependencyInjectionTests
         var ecdsa = ECDsa.Create(ECCurve.CreateFromValue(referenceRecord));
 
         var certRequest = new CertificateRequest($"CN={subject}", ecdsa, HashAlgorithmName.SHA256);
-
-        //add extensions to the request (just as an example)
-        //add keyUsage
+        
         certRequest.CertificateExtensions.Add(new X509KeyUsageExtension(X509KeyUsageFlags.DigitalSignature, true));
 
         var generatedCert = certRequest.CreateSelfSigned(DateTimeOffset.Now.AddDays(-1), DateTimeOffset.Now.AddYears(10)); // generate the cert and sign!

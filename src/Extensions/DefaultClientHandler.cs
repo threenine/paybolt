@@ -1,5 +1,5 @@
 ﻿using System.Diagnostics;
-using Models.Http;
+using BoltPay.Http;
 
 namespace PayBolt.DependencyInjection;
 

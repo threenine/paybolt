@@ -6,4 +6,7 @@
         <Nullable>enable</Nullable>
         <RootNamespace>BoltPay</RootNamespace>
     </PropertyGroup>
+   <ItemGroup>
+       <InternalsVisibleTo Include="BoltPay.Tests" />
+   </ItemGroup>
 </Project>

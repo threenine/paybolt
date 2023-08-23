@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\Contracts\Contracts.csproj" />
+      <ProjectReference Include="..\..\Extensions\Extensions.csproj" />
+      <ProjectReference Include="..\..\main\PayBolt.csproj" />
+    </ItemGroup>
+
+
+
+
+</Project>

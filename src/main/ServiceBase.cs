@@ -6,13 +6,13 @@ using BoltPay.Authentication;
 
 namespace BoltPay;
 
-public abstract class ServiceBase
+public abstract class ServiceBase : IRestClient
 {
     private readonly HttpClient _client;
     private readonly string _baseUrl;
     private readonly AuthenticationBase _authentication;
 
-    public ServiceBase(HttpClient client, string baseUrl, AuthenticationBase authentication)
+    protected ServiceBase(HttpClient client, string baseUrl, AuthenticationBase authentication)
     {
         _client = client;
         _baseUrl = baseUrl;
@@ -30,8 +30,13 @@ public abstract class ServiceBase
         //TODO: Add Guard clauses
         return await Request<TResponse>(HttpMethod.Get, url);
     }
-   
-    /// <summary>
+
+   public async Task<TResponse> Post<TResponse>(string url, object? body = null, bool formUrlEncoded = false) where TResponse : class
+   {
+      return await Request<TResponse>(HttpMethod.Post, url, body, formUrlEncoded);
+   }
+
+   /// <summary>
     /// 
     /// </summary>
     /// <param name="method"></param>
@@ -76,7 +81,7 @@ public abstract class ServiceBase
    /// </summary>
    /// <param name="url"></param>
    /// <returns></returns>
-    private Uri BuildUri(string query)
+    internal Uri BuildUri(string query)
     {
         if(!query.StartsWith("http") && !string.IsNullOrEmpty(_baseUrl))
         {

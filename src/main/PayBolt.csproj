@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
     <ProjectReference Include="..\Extensions\Extensions.csproj" />
-    <ProjectReference Include="..\Models\Models.csproj" />
+    <ProjectReference Include="..\Contracts\Contracts.csproj" />
   </ItemGroup>
 
 

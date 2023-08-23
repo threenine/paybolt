@@ -2,7 +2,7 @@
 <div align="center" style="text-align: center">
 
    <a href="https://paybolt.dev">
-    <img src="PayBolt.png.png" alt="Paybolt C# Lightning client">
+    <img src="https://res.cloudinary.com/threenine-co-uk/image/upload/v1692739307/paybolt.png" alt="PayBolt C# Lightning client">
   </a>
   
 </div>

@@ -2,7 +2,7 @@
     
 
     <ItemGroup>
-      <ProjectReference Include="..\Models\Models.csproj" />
+      <ProjectReference Include="..\Contracts\Contracts.csproj" />
     </ItemGroup>
 
 </Project>
