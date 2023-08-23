@@ -13,7 +13,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{38C0B977
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PayBolt.Tests", "tests\PayBolt.Tests\PayBolt.Tests.csproj", "{DEF97BDA-8276-429E-8127-7BCD6BDE98A3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Clients", "src\Clients\Clients\Clients.csproj", "{689B8408-C110-4E36-BD65-494B80158DE9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Clients", "src\Clients\Clients.csproj", "{689B8408-C110-4E36-BD65-494B80158DE9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

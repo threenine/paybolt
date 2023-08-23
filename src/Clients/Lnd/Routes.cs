@@ -1,6 +1,6 @@
 namespace BoltPay.Lnd;
 
-public class Routes
+internal class Routes
 {
     public const string GetInfo = "/v1/getinfo";
     public const string Balance = "v1/balance/blockchain";
