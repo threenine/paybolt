@@ -11,8 +11,9 @@ namespace BoltPay.Lnd;
 
 public class LndClient : ServiceBase, ILightningClient, IDisposable
 {
-    private bool clientInternal = false;
-    public LndClient(HttpClient client, LndOptions options ) : base( client, options.Address.ToBaseUrl(), BuildAuthentication(options))
+    private bool InternalClient { get; set; } = false;
+
+    private LndClient(HttpClient client, LndOptions options ) : base( client, options.Address.ToBaseUrl(), BuildAuthentication(options))
     {
     }
     
@@ -20,17 +21,17 @@ public class LndClient : ServiceBase, ILightningClient, IDisposable
         byte[]? macaroonBytes = null,
         HttpClient? httpClient = null)
     {
-       var internalBuild = false;
+       var internalClient = false;
        
         if (httpClient == null)
         {
             httpClient = new HttpClient();
-            internalBuild = true;
+            internalClient = true;
         }
         
         if(!Uri.TryCreate(baseUrl, UriKind.Absolute, out var uri))
         {
-            throw new PayBoltException($"Invalid uri format for LND Client : {baseUrl}");
+            throw new PayBoltException($"{Clients.LndInvalidUri} : {baseUrl}");
         }
         
         var client = new LndClient(httpClient, new LndOptions
@@ -39,11 +40,11 @@ public class LndClient : ServiceBase, ILightningClient, IDisposable
             Macaroon = macaroonBytes ?? macaroonHexString.HexStringToByteArray()
         });
         
-        client.clientInternal = internalBuild;
+        client.InternalClient = internalClient;
         return client;
     }
 
-    internal static AuthenticationBase BuildAuthentication(LndOptions options)
+    private static AuthenticationBase BuildAuthentication(LndOptions options)
     {
         return new MacaroonAuthentication(options.Macaroon);
     }
@@ -53,10 +54,7 @@ public class LndClient : ServiceBase, ILightningClient, IDisposable
         try
         {
             var result = await Get<GetInfo>(Routes.GetInfo);
-            if (string.IsNullOrEmpty(result.Alias))
-            {
-                return new Connection(Result.Error, "Unable to connect to LND");
-            }
+            if (string.IsNullOrEmpty(result.Alias)) return new Connection(Result.Error, Clients.LndConnectFailure);
         }
         catch (Exception e)
         {
@@ -90,6 +88,8 @@ public class LndClient : ServiceBase, ILightningClient, IDisposable
 
     public void Dispose()
     {
-        // TODO release managed resources here
+        if (InternalClient)
+            Client.Dispose();
+            
     }
 }

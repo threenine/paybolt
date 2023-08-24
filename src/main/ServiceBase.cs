@@ -8,13 +8,13 @@ namespace BoltPay;
 
 public abstract class ServiceBase : IRestClient
 {
-    private readonly HttpClient _client;
+    protected readonly HttpClient Client;
     private readonly string _baseUrl;
     private readonly AuthenticationBase _authentication;
 
     protected ServiceBase(HttpClient client, string baseUrl, AuthenticationBase authentication)
     {
-        _client = client;
+        Client = client;
         _baseUrl = baseUrl;
         _authentication = authentication;
     }
@@ -56,8 +56,8 @@ public abstract class ServiceBase : IRestClient
         try
         {
             var request = BuildRequestMessage(method,  BuildUri(query) , body, formUrlEncoded);
-            await _authentication.AddAuthentication(_client, request);
-            var response = await _client.SendAsync(request);
+            await _authentication.AddAuthentication(Client, request);
+            var response = await Client.SendAsync(request);
 
             response.EnsureSuccessStatusCode();
        

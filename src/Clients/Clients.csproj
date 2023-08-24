@@ -7,6 +7,21 @@
       <ProjectReference Include="..\Extensions\Extensions.csproj" />
       <ProjectReference Include="..\main\PayBolt.csproj" />
     </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Update="Clients.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>Clients.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="Clients.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>Clients.resx</DependentUpon>
+      </Compile>
+    </ItemGroup>
     
 
 
