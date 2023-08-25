@@ -1,9 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <ItemGroup>
-      <ProjectReference Include="..\..\Contracts\Contracts.csproj" />
-      <ProjectReference Include="..\..\Extensions\Extensions.csproj" />
-      <ProjectReference Include="..\..\main\PayBolt.csproj" />
+      <ProjectReference Include="..\Contracts\Contracts.csproj" />
       <ProjectReference Include="..\Extensions\Extensions.csproj" />
       <ProjectReference Include="..\main\PayBolt.csproj" />
     </ItemGroup>

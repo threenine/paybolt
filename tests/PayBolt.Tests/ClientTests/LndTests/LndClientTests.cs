@@ -31,6 +31,8 @@ public class LndClientTests
     [Fact, Description("Should Connect if Node Alias is not empty")]
     public async Task ShouldConnectIfNodeAliasIsNotEmpty()
     {
+        
+        // Arrange
         var mockHttpMessageHandlerHandler = new Mock<HttpMessageHandler>();
 
         var response = new HttpResponseMessage
@@ -45,15 +47,13 @@ public class LndClientTests
                 ItExpr.IsAny<CancellationToken>())
             .ReturnsAsync(response);
 
+        //Act
         var client = new HttpClient(mockHttpMessageHandlerHandler.Object);
         var lndClient = LndClient.Create(TestUrlString, httpClient: client);
 
         var result = await lndClient.Connect();
-
-        result.ShouldSatisfyAllConditions(
-            _ => result.Result.ShouldBe(Result.Ok)
-        );
         
+        // Assert
         mockHttpMessageHandlerHandler.Protected().Verify(
             SendAsync,
             Times.Exactly(1),
@@ -63,11 +63,18 @@ public class LndClientTests
             ),
             ItExpr.IsAny<CancellationToken>()
         );
+
+        result.ShouldSatisfyAllConditions(
+            _ => result.Result.ShouldBe(Result.Ok)
+        );
+        
+       
     }
 
     [Fact, Description("Should not Connect if Node Alias is empty")]
     public async Task ShouldNotConnectIfNodeIsEmpty()
     {
+        // Arrange
         var mockHttpMessageHandlerHandler = new Mock<HttpMessageHandler>();
 
         var response = new HttpResponseMessage
@@ -82,20 +89,35 @@ public class LndClientTests
                 ItExpr.IsAny<CancellationToken>())
             .ReturnsAsync(response);
 
+        // Act
         var client = new HttpClient(mockHttpMessageHandlerHandler.Object);
         var lndClient = LndClient.Create(TestUrlString, httpClient: client);
 
         var result = await lndClient.Connect();
+        
+        // Assert
+        mockHttpMessageHandlerHandler.Protected().Verify(
+            SendAsync,
+            Times.Exactly(1),
+            ItExpr.Is<HttpRequestMessage>(req =>
+                req.Method == HttpMethod.Get
+                && req.RequestUri == new Uri(string.Concat(TestUrlString, Routes.GetInfo))
+            ),
+            ItExpr.IsAny<CancellationToken>()
+        );
 
         result.ShouldSatisfyAllConditions(
             _ => result.Result.ShouldBe(Result.Error),
             _ => result.Error.ShouldNotBeNull()
         );
+        
+      
     }
 
     [Fact, Description("Should return error if the connection request fails")]
     public async Task ShouldReturnErrorIfConnectionFails()
     {
+        // Arrange
         var mockHttpMessageHandlerHandler = new Mock<HttpMessageHandler>();
 
         var response = new HttpResponseMessage
@@ -110,10 +132,22 @@ public class LndClientTests
                 ItExpr.IsAny<CancellationToken>())
             .ReturnsAsync(response);
 
+        // Act
         var client = new HttpClient(mockHttpMessageHandlerHandler.Object);
         var lndClient = LndClient.Create(TestUrlString, httpClient: client);
 
         var result = await lndClient.Connect();
+        
+        // Assert
+        mockHttpMessageHandlerHandler.Protected().Verify(
+            SendAsync,
+            Times.Exactly(1),
+            ItExpr.Is<HttpRequestMessage>(req =>
+                req.Method == HttpMethod.Get
+                && req.RequestUri == new Uri(string.Concat(TestUrlString, Routes.GetInfo))
+            ),
+            ItExpr.IsAny<CancellationToken>()
+        );
 
         result.ShouldSatisfyAllConditions(
             _ => result.Result.ShouldBe(Result.Error),
@@ -125,13 +159,16 @@ public class LndClientTests
     [Fact, Description("Should return a balance value from a Wallet Balance request")]
     public async Task ShouldReturnWalletBalance()
     {
-        const long testBalance = 10000;
+        // Arrange
+        const long testSatsBalance = 10000;
+        var testBtcBalance = Currency.FromSats(testSatsBalance).ToBtc();
+
         var mockHttpMessageHandlerHandler = new Mock<HttpMessageHandler>();
 
         var response = new HttpResponseMessage
         {
             StatusCode = HttpStatusCode.OK,
-            Content = new StringContent(JsonSerializer.Serialize(new Balance { Total = testBalance }))
+            Content = new StringContent(JsonSerializer.Serialize(new Balance { Total = testSatsBalance }))
         };
         mockHttpMessageHandlerHandler.Protected()
             .Setup<Task<HttpResponseMessage>>(
@@ -140,13 +177,27 @@ public class LndClientTests
                 ItExpr.IsAny<CancellationToken>())
             .ReturnsAsync(response);
 
+        // Act
         var client = new HttpClient(mockHttpMessageHandlerHandler.Object);
         var lndClient = LndClient.Create(TestUrlString, httpClient: client);
 
         var result = await lndClient.Balance();
-
-        result.ShouldSatisfyAllConditions(
-            _ => result.ToSats().ShouldBe(testBalance)
+        
+        // Assert
+        mockHttpMessageHandlerHandler.Protected().Verify(
+            SendAsync,
+            Times.Exactly(1),
+            ItExpr.Is<HttpRequestMessage>(req =>
+                req.Method == HttpMethod.Get
+                && req.RequestUri == new Uri(string.Concat(TestUrlString, Routes.Balance))
+            ),
+            ItExpr.IsAny<CancellationToken>()
         );
+        
+        result.ShouldSatisfyAllConditions(
+            _ => result.ToSats().ShouldBe(testSatsBalance),
+            _ => result.ToBtc().ShouldBe(testBtcBalance)
+        );
+        
     }
 }
