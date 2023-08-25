@@ -5,12 +5,10 @@ namespace BoltPay.Tests;
 
 public class CurrencyConversionTests
 {
-
     /// <summary>
     /// Currency conversion tests to ensure that the conversion is working as expected
     /// 
     /// </summary>
-
     [Fact, Description("A basic conversion of 1 Satoshi to 1000 Millisatoshi")]
     public void One_sat_should_be_be_equal_to_1000_millisats()
     {
@@ -54,6 +52,9 @@ public class CurrencyConversionTests
         new Currency(1, Unit.Satoshi).ToBtc().ShouldBeEquivalentTo(0.00000001M);
     }
 
+    /// <summary>
+    /// Currency Operator tests to ensure that the operators are working as expected
+    /// </summary>
     [Fact, Description("1 Sat to be equivalent to 1000 Millisats")]
     public void One_sat_should_be_equivalent_to_1000_millisats()
     {
@@ -65,17 +66,57 @@ public class CurrencyConversionTests
     {
         Currency.FromSats(1).Equals(Currency.FromMilliSats(1)).ShouldBeFalse();
     }
-    
+
     [Fact, Description("1000 Sat should be greater than  1000 Millisats")]
     public void One_thousand_sat_should_be_greater_than_1000_milli_sats()
     {
         Currency.FromSats(1000).ShouldBeGreaterThan(Currency.FromMilliSats(1000));
     }
-    
+
     [Fact, Description("1000 Sat should be greater than or equal to  1000 Millisats")]
     public void One_thousand_sat_should_be_greater_than_or_equal_to_1000_milli_sats()
     {
         Currency.FromMilliSats(1000).ShouldBeLessThanOrEqualTo(Currency.FromSats(1));
     }
+    
+    /// <summary>
+    /// Currency Sorting tests to ensure that the sorting is working as expected
+    /// </summary>
+    [Fact, Description("Sorting of 1 Sat, 1 Millisat and 1 BTC should be 1 Millisat, 1 Sat and 1 BTC")]
+    public void Sorting_of_1_sat_1_millisat_and_1_btc_should_be_1_millisat_1_sat_and_1_btc()
+    {
+        var currencies = new Currency[]
+        {
+            Currency.FromSats(1),
+            Currency.FromMilliSats(1),
+            new Currency(1, Unit.BTC),
+        };
+
+        currencies = currencies.OrderBy(m => m).ToArray();
+
+        currencies[0].ShouldBe(Currency.FromMilliSats(1));
+        currencies[1].ShouldBe(Currency.FromSats(1));
+        currencies[2].ShouldBe(new Currency(1, Unit.BTC));
+    }
+
+    [Fact, Description("Should order by Descending")]
+    public void Should_Order_By_Descending()
+    {
+        var currencies = new Currency[]
+        {
+            Currency.FromSats(1),
+            Currency.FromMilliSats(1),
+            new Currency(1, Unit.BTC),
+        };
+
+        currencies = currencies.OrderByDescending(m => m).ToArray();
+        
+        currencies[0].ShouldBe(new Currency(1, Unit.BTC));
+        currencies[1].ShouldBe(Currency.FromSats(1));
+        currencies[2].ShouldBe(Currency.FromMilliSats(1));
+       
+    }
+    
+    
     
 }
