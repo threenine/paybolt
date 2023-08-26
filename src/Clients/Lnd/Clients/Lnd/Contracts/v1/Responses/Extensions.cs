@@ -1,7 +1,9 @@
+using BoltPay;
+using BoltPay.Clients.Lnd.Contracts.v1.Responses;
 using BoltPay.Lightning;
 using PayBolt.DependencyInjection;
 
-namespace BoltPay.Clients.Lnd.Contracts.v1.Responses;
+namespace PayBolt.Clients.Clients.Lnd.Contracts.v1.Responses;
 
 internal static class Extensions
 {
@@ -10,10 +12,6 @@ internal static class Extensions
         string memo,
         Options options)
     {
-        if(source == null)
-        {
-            return null;
-        }
 
         return new Invoice
         {

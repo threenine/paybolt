@@ -7,6 +7,7 @@ using BoltPay.Lightning;
 using BoltPay.Networking;
 using BoltPay.Pay;
 using PayBolt.Clients;
+using PayBolt.Clients.Clients.Lnd.Contracts.v1.Responses;
 using PayBolt.DependencyInjection;
 
 namespace BoltPay.Clients.Lnd;
@@ -51,14 +52,14 @@ public class Client : RestServiceBase, ILightningClient
     public async Task<Invoice> Create(Currency amount, string description, Options? options = null)
     {
         var strAmount = ((long)amount.ToSats()).ToString(CultureInfo.InvariantCulture);
-        var strExpiry = options.ToExpiryString();
+        var strExpiry = options?.ToExpiryString();
 
 
         var request = new LnrpcInvoice
         {
             Value = strAmount,
             Memo = description,
-            Expiry = strExpiry,
+            Expiry = strExpiry ?? string.Empty,
             Private = false
         };
         
