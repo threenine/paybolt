@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using BoltPay;
 using BoltPay.Http;
 
 namespace PayBolt.DependencyInjection;

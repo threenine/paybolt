@@ -1,6 +1,6 @@
 using System.Globalization;
 
-namespace PayBolt.DependencyInjection;
+namespace BoltPay;
 
 public static class ByteExtensions
 {

@@ -56,5 +56,11 @@ namespace PayBolt.Clients {
                 return ResourceManager.GetString("LndInvalidUri", resourceCulture);
             }
         }
+        
+        internal static string LndCreateInvoiceFailure {
+            get {
+                return ResourceManager.GetString("LndCreateInvoiceFailure", resourceCulture);
+            }
+        }
     }
 }

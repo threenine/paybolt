@@ -24,4 +24,7 @@
     <data name="LndInvalidUri" xml:space="preserve">
         <value>Invalid uri format for LND Client</value>
     </data>
+    <data name="LndCreateInvoiceFailure" xml:space="preserve">
+        <value>Payment Request failed </value>
+    </data>
 </root>

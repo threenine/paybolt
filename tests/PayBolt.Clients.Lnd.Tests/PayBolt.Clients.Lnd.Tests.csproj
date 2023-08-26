@@ -10,4 +10,10 @@
       <ProjectReference Include="..\..\src\Clients\Lnd\Lnd.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Reference Include="Moq">
+        <HintPath>..\..\..\..\..\.nuget\packages\moq\4.20.69\lib\net6.0\Moq.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+
 </Project>

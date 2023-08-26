@@ -5,6 +5,7 @@ using BoltPay;
 using BoltPay.Authentication;
 using BoltPay.Clients.Lnd;
 using BoltPay.Clients.Lnd.Contracts.v1.Responses;
+using FizzWare.NBuilder;
 using Moq;
 using Moq.Protected;
 using Shouldly;
@@ -18,7 +19,6 @@ public class ClientTests
     private const string TestAlias = "test";
 
     private readonly Mock<HttpMessageHandler> _mockHttpMessageHandlerHandler = new();
-
     private readonly Client _client;
 
     public ClientTests()
@@ -33,10 +33,15 @@ public class ClientTests
     public async Task ShouldConnectIfNodeAliasIsNotEmpty()
     {
         // Arrange
+
+        var getInfo = Builder<GetInfo>.CreateNew()
+            .With(x => x.Alias = TestAlias)
+            .Build();
+        
         var response = new HttpResponseMessage
         {
             StatusCode = HttpStatusCode.OK,
-            Content = new StringContent(JsonSerializer.Serialize(new GetInfo { Alias = TestAlias }))
+            Content = new StringContent(JsonSerializer.Serialize(getInfo))
         };
         _mockHttpMessageHandlerHandler.Protected()
             .Setup<Task<HttpResponseMessage>>(
@@ -46,8 +51,6 @@ public class ClientTests
             .ReturnsAsync(response);
 
         //Act
-
-
         var result = await _client.NodeInfo();
 
         // Assert
@@ -70,10 +73,14 @@ public class ClientTests
     public async Task ShouldNotConnectIfNodeIsEmpty()
     {
         // Arrange
+        
+        var getInfo = Builder<GetInfo>.CreateNew()
+            .With(x => x.Alias = string.Empty)
+            .Build();
         var response = new HttpResponseMessage
         {
             StatusCode = HttpStatusCode.OK,
-            Content = new StringContent(JsonSerializer.Serialize(new GetInfo { Alias = string.Empty }))
+            Content = new StringContent(JsonSerializer.Serialize(getInfo))
         };
         _mockHttpMessageHandlerHandler.Protected()
             .Setup<Task<HttpResponseMessage>>(
@@ -106,10 +113,15 @@ public class ClientTests
     public async Task ShouldReturnErrorIfConnectionFails()
     {
         // Arrange
+        
+        var getInfo = Builder<GetInfo>.CreateNew()
+            .With(x => x.Alias = string.Empty)
+            .Build();
+        
         var response = new HttpResponseMessage
         {
             StatusCode = HttpStatusCode.ServiceUnavailable,
-            Content = new StringContent(JsonSerializer.Serialize(new GetInfo { Alias = string.Empty }))
+            Content = new StringContent(JsonSerializer.Serialize(getInfo))
         };
         _mockHttpMessageHandlerHandler.Protected()
             .Setup<Task<HttpResponseMessage>>(
@@ -145,11 +157,14 @@ public class ClientTests
         // Arrange
         const long testSatsBalance = 10000;
 
-
+         var balance = Builder<Balance>.CreateNew()
+            .With(x => x.Total = testSatsBalance)
+            .Build();
+         
         var response = new HttpResponseMessage
         {
             StatusCode = HttpStatusCode.OK,
-            Content = new StringContent(JsonSerializer.Serialize(new Balance { Total = testSatsBalance }))
+            Content = new StringContent(JsonSerializer.Serialize(balance))
         };
         _mockHttpMessageHandlerHandler.Protected()
             .Setup<Task<HttpResponseMessage>>(

@@ -1,6 +1,5 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Clients\Clients.csproj" />
     <ProjectReference Include="..\..\src\main\PayBolt.csproj" />
   </ItemGroup>
     
