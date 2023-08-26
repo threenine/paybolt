@@ -13,8 +13,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{38C0B977
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PayBolt.Tests", "tests\PayBolt.Tests\PayBolt.Tests.csproj", "{DEF97BDA-8276-429E-8127-7BCD6BDE98A3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Clients", "src\Clients\Clients.csproj", "{689B8408-C110-4E36-BD65-494B80158DE9}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Clients", "Clients", "{68D4A5B6-70EF-4A73-B693-472B8DCD38C1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lnd", "src\Clients\Lnd\Lnd.csproj", "{8B615455-E8D4-4FB1-8979-DABE77F47210}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PayBolt.Clients.Lnd.Tests", "tests\PayBolt.Clients.Lnd.Tests\PayBolt.Clients.Lnd.Tests.csproj", "{04FF6FD5-DC53-4822-A03C-9AC41298EA45}"
+EndProject
+
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,8 +49,18 @@ Global
 		{689B8408-C110-4E36-BD65-494B80158DE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{689B8408-C110-4E36-BD65-494B80158DE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{689B8408-C110-4E36-BD65-494B80158DE9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8B615455-E8D4-4FB1-8979-DABE77F47210}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B615455-E8D4-4FB1-8979-DABE77F47210}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8B615455-E8D4-4FB1-8979-DABE77F47210}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8B615455-E8D4-4FB1-8979-DABE77F47210}.Release|Any CPU.Build.0 = Release|Any CPU
+		{04FF6FD5-DC53-4822-A03C-9AC41298EA45}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{04FF6FD5-DC53-4822-A03C-9AC41298EA45}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{04FF6FD5-DC53-4822-A03C-9AC41298EA45}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{04FF6FD5-DC53-4822-A03C-9AC41298EA45}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{DEF97BDA-8276-429E-8127-7BCD6BDE98A3} = {38C0B977-D71B-4D8C-9864-4C2E14A1ACDF}
+		{8B615455-E8D4-4FB1-8979-DABE77F47210} = {68D4A5B6-70EF-4A73-B693-472B8DCD38C1}
+		{04FF6FD5-DC53-4822-A03C-9AC41298EA45} = {38C0B977-D71B-4D8C-9864-4C2E14A1ACDF}
 	EndGlobalSection
 EndGlobal

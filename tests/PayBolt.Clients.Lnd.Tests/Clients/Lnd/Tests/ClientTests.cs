@@ -1,46 +1,44 @@
-/*using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Net;
 using System.Text.Json;
-using BoltPay.Exceptions;
-using BoltPay.Lnd;
-using BoltPay.Lnd.Responses;
+using BoltPay;
+using BoltPay.Authentication;
+using BoltPay.Clients.Lnd;
+using BoltPay.Clients.Lnd.Contracts.v1.Responses;
 using Moq;
 using Moq.Protected;
 using Shouldly;
 
-namespace BoltPay.Tests.ClientTests.LndTests;
+namespace PayBolt.Clients.Lnd.Tests;
 
-public class LndClientTests
+public class ClientTests
 {
     private const string TestUrlString = "http://localhost:8080";
     private const string SendAsync = "SendAsync";
     private const string TestAlias = "test";
 
-    [Fact, Description("Should throw an exception if the URI is invalid")]
-    public void ShouldThrowAnExceptionIfTheUriIsInvalid()
+    private readonly Mock<HttpMessageHandler> _mockHttpMessageHandlerHandler = new();
+
+    private readonly Client _client;
+
+    public ClientTests()
     {
-        Should.Throw<PayBoltException>(() => LndClient.Create("bad_uri"));
+        var httpClient = new HttpClient(_mockHttpMessageHandlerHandler.Object);
+        httpClient.BaseAddress = new Uri(TestUrlString);
+        _client = new Client(httpClient, new NoAuthentication());
     }
 
-    [Fact, Description("Should throw an exception if the URI is null")]
-    public void ShouldThrowAnExceptionIfTheUriIsNull()
-    {
-        Should.Throw<PayBoltException>(() => LndClient.Create(null!));
-    }
 
     [Fact, Description("Should Connect if Node Alias is not empty")]
     public async Task ShouldConnectIfNodeAliasIsNotEmpty()
     {
-        
         // Arrange
-        var mockHttpMessageHandlerHandler = new Mock<HttpMessageHandler>();
-
         var response = new HttpResponseMessage
         {
             StatusCode = HttpStatusCode.OK,
             Content = new StringContent(JsonSerializer.Serialize(new GetInfo { Alias = TestAlias }))
         };
-        mockHttpMessageHandlerHandler.Protected()
+        _mockHttpMessageHandlerHandler.Protected()
             .Setup<Task<HttpResponseMessage>>(
                 SendAsync,
                 ItExpr.IsAny<HttpRequestMessage>(),
@@ -48,13 +46,12 @@ public class LndClientTests
             .ReturnsAsync(response);
 
         //Act
-        var client = new HttpClient(mockHttpMessageHandlerHandler.Object);
-        var lndClient = LndClient.Create(TestUrlString, httpClient: client);
 
-        var result = await lndClient.Connect();
-        
+
+        var result = await _client.NodeInfo();
+
         // Assert
-        mockHttpMessageHandlerHandler.Protected().Verify(
+        _mockHttpMessageHandlerHandler.Protected().Verify(
             SendAsync,
             Times.Exactly(1),
             ItExpr.Is<HttpRequestMessage>(req =>
@@ -67,22 +64,18 @@ public class LndClientTests
         result.ShouldSatisfyAllConditions(
             _ => result.Result.ShouldBe(Result.Ok)
         );
-        
-       
     }
 
     [Fact, Description("Should not Connect if Node Alias is empty")]
     public async Task ShouldNotConnectIfNodeIsEmpty()
     {
         // Arrange
-        var mockHttpMessageHandlerHandler = new Mock<HttpMessageHandler>();
-
         var response = new HttpResponseMessage
         {
             StatusCode = HttpStatusCode.OK,
             Content = new StringContent(JsonSerializer.Serialize(new GetInfo { Alias = string.Empty }))
         };
-        mockHttpMessageHandlerHandler.Protected()
+        _mockHttpMessageHandlerHandler.Protected()
             .Setup<Task<HttpResponseMessage>>(
                 SendAsync,
                 ItExpr.IsAny<HttpRequestMessage>(),
@@ -90,13 +83,10 @@ public class LndClientTests
             .ReturnsAsync(response);
 
         // Act
-        var client = new HttpClient(mockHttpMessageHandlerHandler.Object);
-        var lndClient = LndClient.Create(TestUrlString, httpClient: client);
+        var result = await _client.NodeInfo();
 
-        var result = await lndClient.Connect();
-        
         // Assert
-        mockHttpMessageHandlerHandler.Protected().Verify(
+        _mockHttpMessageHandlerHandler.Protected().Verify(
             SendAsync,
             Times.Exactly(1),
             ItExpr.Is<HttpRequestMessage>(req =>
@@ -110,22 +100,18 @@ public class LndClientTests
             _ => result.Result.ShouldBe(Result.Error),
             _ => result.Error.ShouldNotBeNull()
         );
-        
-      
     }
 
     [Fact, Description("Should return error if the connection request fails")]
     public async Task ShouldReturnErrorIfConnectionFails()
     {
         // Arrange
-        var mockHttpMessageHandlerHandler = new Mock<HttpMessageHandler>();
-
         var response = new HttpResponseMessage
         {
             StatusCode = HttpStatusCode.ServiceUnavailable,
             Content = new StringContent(JsonSerializer.Serialize(new GetInfo { Alias = string.Empty }))
         };
-        mockHttpMessageHandlerHandler.Protected()
+        _mockHttpMessageHandlerHandler.Protected()
             .Setup<Task<HttpResponseMessage>>(
                 SendAsync,
                 ItExpr.IsAny<HttpRequestMessage>(),
@@ -133,13 +119,10 @@ public class LndClientTests
             .ReturnsAsync(response);
 
         // Act
-        var client = new HttpClient(mockHttpMessageHandlerHandler.Object);
-        var lndClient = LndClient.Create(TestUrlString, httpClient: client);
+        var result = await _client.NodeInfo();
 
-        var result = await lndClient.Connect();
-        
         // Assert
-        mockHttpMessageHandlerHandler.Protected().Verify(
+        _mockHttpMessageHandlerHandler.Protected().Verify(
             SendAsync,
             Times.Exactly(1),
             ItExpr.Is<HttpRequestMessage>(req =>
@@ -161,16 +144,14 @@ public class LndClientTests
     {
         // Arrange
         const long testSatsBalance = 10000;
-      
 
-        var mockHttpMessageHandlerHandler = new Mock<HttpMessageHandler>();
 
         var response = new HttpResponseMessage
         {
             StatusCode = HttpStatusCode.OK,
             Content = new StringContent(JsonSerializer.Serialize(new Balance { Total = testSatsBalance }))
         };
-        mockHttpMessageHandlerHandler.Protected()
+        _mockHttpMessageHandlerHandler.Protected()
             .Setup<Task<HttpResponseMessage>>(
                 SendAsync,
                 ItExpr.IsAny<HttpRequestMessage>(),
@@ -178,13 +159,10 @@ public class LndClientTests
             .ReturnsAsync(response);
 
         // Act
-        var client = new HttpClient(mockHttpMessageHandlerHandler.Object);
-        var lndClient = LndClient.Create(TestUrlString, httpClient: client);
+        var result = await _client.Balance();
 
-        var result = await lndClient.Balance();
-        
         // Assert
-        mockHttpMessageHandlerHandler.Protected().Verify(
+        _mockHttpMessageHandlerHandler.Protected().Verify(
             SendAsync,
             Times.Exactly(1),
             ItExpr.Is<HttpRequestMessage>(req =>
@@ -193,10 +171,9 @@ public class LndClientTests
             ),
             ItExpr.IsAny<CancellationToken>()
         );
-        
+
         result.ShouldSatisfyAllConditions(
             _ => result.ToSats().ShouldBe(testSatsBalance)
         );
-        
     }
-}*/
+}

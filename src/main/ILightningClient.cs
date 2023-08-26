@@ -11,7 +11,7 @@ public interface ILightningClient
     /// <returns>
     ///    True of the connectivity is ok, false otherwise 
     /// </returns>
-    Task<Connection> Connect();
+    Task<Connection> NodeInfo();
 
     /// <summary>Gets the node / wallet balance.</summary>
     Task<Currency> Balance();

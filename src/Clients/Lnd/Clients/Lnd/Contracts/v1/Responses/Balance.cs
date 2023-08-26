@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace BoltPay.Lnd.Responses;
+namespace BoltPay.Clients.Lnd.Contracts.v1.Responses;
 
 internal class Balance
 {

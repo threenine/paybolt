@@ -1,0 +1,10 @@
+<Project>
+    <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))"/>
+    <PropertyGroup>
+      <AssemblyName>PayBolt.Clients.Lnd</AssemblyName>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <InternalsVisibleTo Include="PayBolt.Clients.Lnd.Tests" />
+    </ItemGroup>
+</Project>

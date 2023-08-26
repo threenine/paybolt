@@ -6,17 +6,15 @@ using BoltPay.Authentication;
 
 namespace BoltPay;
 
-public abstract class ServiceBase : IRestClient
+public abstract class RestServiceBase : IRestClient
 {
-    protected readonly HttpClient Client;
-    private readonly string _baseUrl;
+    private readonly HttpClient _client;
     private readonly AuthenticationBase _authentication;
 
-    protected ServiceBase(HttpClient client, string baseUrl, AuthenticationBase authentication)
+    protected RestServiceBase(HttpClient client,  AuthenticationBase authentication)
     {
-        Client = client;
-        _baseUrl = baseUrl;
-        _authentication = authentication;
+        _client = client;
+       _authentication = authentication;
     }
    
    /// <summary>
@@ -56,8 +54,8 @@ public abstract class ServiceBase : IRestClient
         try
         {
             var request = BuildRequestMessage(method,  BuildUri(query) , body, formUrlEncoded);
-            await _authentication.AddAuthentication(Client, request);
-            var response = await Client.SendAsync(request);
+            await _authentication.AddAuthentication(_client, request);
+            var response = await _client.SendAsync(request);
 
             response.EnsureSuccessStatusCode();
        
@@ -83,9 +81,9 @@ public abstract class ServiceBase : IRestClient
    /// <returns></returns>
     internal Uri BuildUri(string query)
     {
-        if(!query.StartsWith("http") && !string.IsNullOrEmpty(_baseUrl))
+        if(!query.StartsWith("http") && !string.IsNullOrEmpty(_client.BaseAddress?.ToString()))
         {
-            return new Uri( $"{_baseUrl}/{query.TrimStart('/')}");
+            return new Uri( $"{_client.BaseAddress.ToString().TrimEnd('/')}/{query.TrimStart('/')}");
         }
         
         return new Uri(query);
