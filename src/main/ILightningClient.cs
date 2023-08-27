@@ -1,8 +1,9 @@
-using BoltPay.Lightning;
+
 using BoltPay.Networking;
 using BoltPay.Pay;
+using PayBolt.Lightning;
 
-namespace BoltPay;
+namespace PayBolt;
 
 public interface ILightningClient 
 {

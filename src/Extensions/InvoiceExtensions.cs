@@ -1,5 +1,5 @@
 using System.Globalization;
-using BoltPay.Lightning;
+using PayBolt.Lightning;
 
 namespace PayBolt.DependencyInjection;
 

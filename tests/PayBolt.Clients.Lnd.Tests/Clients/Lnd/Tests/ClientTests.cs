@@ -2,8 +2,7 @@
 using System.Net;
 using System.Text.Json;
 using BoltPay;
-using BoltPay.Authentication;
-using BoltPay.Clients.Lnd;
+using PayBolt.Authentication;
 using BoltPay.Clients.Lnd.Contracts.v1.Responses;
 using FizzWare.NBuilder;
 using Moq;

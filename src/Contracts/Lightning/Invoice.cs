@@ -1,4 +1,4 @@
-namespace BoltPay.Lightning;
+namespace PayBolt.Lightning;
 
 public class Invoice
 {

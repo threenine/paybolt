@@ -1,16 +1,16 @@
 using System.Globalization;
-using BoltPay.Authentication;
-using BoltPay.Clients.Lnd.Contracts.v1.Requests;
+using BoltPay;
 using BoltPay.Clients.Lnd.Contracts.v1.Responses;
-using BoltPay.Exceptions;
-using BoltPay.Lightning;
 using BoltPay.Networking;
 using BoltPay.Pay;
-using PayBolt.Clients;
-using PayBolt.Clients.Clients.Lnd.Contracts.v1.Responses;
+using PayBolt.Authentication;
+using PayBolt.Clients.Lnd.Contracts.v1.Requests;
+using PayBolt.Clients.Lnd.Contracts.v1.Responses;
 using PayBolt.DependencyInjection;
+using PayBolt.Exceptions;
+using PayBolt.Lightning;
 
-namespace BoltPay.Clients.Lnd;
+namespace PayBolt.Clients.Lnd;
 
 public class Client : RestServiceBase, ILightningClient
 {
@@ -49,12 +49,19 @@ public class Client : RestServiceBase, ILightningClient
         return Currency.FromSats(sats);
     }
 
+  /// <summary>
+  /// Create an invoice to receive payment
+  /// </summary>
+  /// <param name="amount"></param>
+  /// <param name="description"></param>
+  /// <param name="options"></param>
+  /// <returns></returns>
+  /// <exception cref="PayBoltException"></exception>
     public async Task<Invoice> Create(Currency amount, string description, Options? options = null)
     {
         var strAmount = ((long)amount.ToSats()).ToString(CultureInfo.InvariantCulture);
         var strExpiry = options?.ToExpiryString();
-
-
+        
         var request = new LnrpcInvoice
         {
             Value = strAmount,
@@ -66,7 +73,7 @@ public class Client : RestServiceBase, ILightningClient
         var response = await Post<AddInvoice>(Routes.Invoice,
             request);
         
-        if(string.IsNullOrEmpty(response.PaymentRequest) || response.Hash == null)
+        if(string.IsNullOrEmpty(response.PaymentRequest) || response.RHash == null)
             throw new PayBoltException(Resources.LndCreateInvoiceFailure);
         
         return response.ToLightningInvoice(amount, description, options);

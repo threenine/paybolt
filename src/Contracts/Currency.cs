@@ -1,4 +1,6 @@
-namespace BoltPay;
+using BoltPay;
+
+namespace PayBolt;
 
 public class Currency : IComparable, IComparable<Currency>, IEquatable<Currency>
 {

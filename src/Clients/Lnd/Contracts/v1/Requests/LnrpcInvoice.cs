@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace BoltPay.Clients.Lnd.Contracts.v1.Requests;
+namespace PayBolt.Clients.Lnd.Contracts.v1.Requests;
 
 public class LnrpcInvoice
 {
@@ -39,12 +39,10 @@ public class LnrpcInvoice
 
     [JsonPropertyName("expiry")]
     public string Expiry { get; set; }
-
-
+    
     [JsonPropertyName("fallback_addr")]
     public string FallbackAddress { get; set; }
-
-
+    
     [JsonPropertyName("cltv_expiry")]
     public string CltvExpiry { get; set; }
 

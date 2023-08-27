@@ -1,4 +1,4 @@
-namespace BoltPay.Exceptions;
+namespace PayBolt.Exceptions;
 
 public enum Error
 {

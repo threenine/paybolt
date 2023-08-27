@@ -1,4 +1,4 @@
-namespace BoltPay.Http;
+namespace PayBolt.Http;
 
 public class HttpClientHandlerOptions
 {

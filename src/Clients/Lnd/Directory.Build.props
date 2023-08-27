@@ -2,6 +2,7 @@
     <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))"/>
     <PropertyGroup>
       <AssemblyName>PayBolt.Clients.Lnd</AssemblyName>
+        <RootNamespace>PayBolt.Clients.Lnd</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>

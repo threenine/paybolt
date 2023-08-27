@@ -1,4 +1,4 @@
-namespace BoltPay;
+namespace PayBolt;
 
 public interface IRestClient
 {

@@ -1,7 +1,8 @@
 using System.ComponentModel;
+using BoltPay;
 using Shouldly;
 
-namespace BoltPay.Tests;
+namespace PayBolt;
 
 public class CurrencyConversionTests
 {

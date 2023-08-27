@@ -2,9 +2,9 @@
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using BoltPay.Authentication;
+using PayBolt.Authentication;
 
-namespace BoltPay;
+namespace PayBolt;
 
 public abstract class RestServiceBase : IRestClient
 {

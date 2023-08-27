@@ -1,6 +1,6 @@
 using System.Runtime.InteropServices.JavaScript;
 
-namespace BoltPay.Exceptions;
+namespace PayBolt.Exceptions;
 
 public class PayBoltException : Exception
 {

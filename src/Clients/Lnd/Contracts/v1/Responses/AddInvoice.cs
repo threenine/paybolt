@@ -1,11 +1,11 @@
 using System.Text.Json.Serialization;
 
-namespace BoltPay.Clients.Lnd.Contracts.v1.Responses;
+namespace PayBolt.Clients.Lnd.Contracts.v1.Responses;
 
 internal class AddInvoice
 {
     [JsonPropertyName("r_hash")] 
-    public byte[] Hash { get; set; }
+    public byte[] RHash { get; set; }
     
     [JsonPropertyName("payment_request")]
     public string PaymentRequest { get; set; }

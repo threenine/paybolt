@@ -2,11 +2,12 @@ using System.ComponentModel;
 using System.Net.Security;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
-using BoltPay.Http;
+using BoltPay;
 using PayBolt.DependencyInjection;
+using PayBolt.Http;
 using Shouldly;
 
-namespace BoltPay.Tests;
+namespace PayBolt.Tests;
 
 public class DependencyInjectionTests
 {

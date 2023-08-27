@@ -1,4 +1,4 @@
-namespace BoltPay.Clients.Lnd;
+namespace PayBolt.Clients.Lnd;
 
 internal class Routes
 {

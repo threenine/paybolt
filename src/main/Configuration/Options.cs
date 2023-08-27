@@ -1,4 +1,4 @@
-namespace BoltPay.Configuration;
+namespace PayBolt.Configuration;
 
 public abstract class Options
 {

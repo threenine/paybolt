@@ -1,9 +1,8 @@
 using BoltPay;
-using BoltPay.Clients.Lnd.Contracts.v1.Responses;
-using BoltPay.Lightning;
 using PayBolt.DependencyInjection;
+using PayBolt.Lightning;
 
-namespace PayBolt.Clients.Clients.Lnd.Contracts.v1.Responses;
+namespace PayBolt.Clients.Lnd.Contracts.v1.Responses;
 
 internal static class Extensions
 {
@@ -15,7 +14,7 @@ internal static class Extensions
 
         return new Invoice
         {
-            Id = source.Hash.ToBitString(),
+            Id = source.RHash.ToBitString(),
             Memo = memo,
             Amount = amount,
             BOLT11 = source.PaymentRequest,

@@ -1,4 +1,4 @@
-namespace BoltPay.Authentication;
+namespace PayBolt.Authentication;
 
 public class NoAuthentication : AuthenticationBase
 {

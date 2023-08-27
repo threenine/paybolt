@@ -4,7 +4,7 @@
         <TargetFramework>net7.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
-        <RootNamespace>BoltPay</RootNamespace>
+        <RootNamespace>PayBolt</RootNamespace>
     </PropertyGroup>
    <ItemGroup>
        <InternalsVisibleTo Include="PayBolt.Tests" />
