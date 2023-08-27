@@ -36,4 +36,4 @@ jobs:
           name: Code coverage
           conclusion: ${{ job.status }}
           output: '{"summary":"Code coverage"}'
-          output_text_description_file: coverage/Summary.md
+          output_text_description_file: coverage/SummaryGithub.md
