@@ -78,7 +78,7 @@ Task("Test")
           
       var glob = new GlobPattern($"./{ coverageOutput}/*.cobertura.xml");
          
-      Information($"globpattern : { glob.ToString()}");
+      Information($"Glob Pattern : { glob.ToString()}");
       var outputDirectory = Directory("./coverage/reports");
      
       var reportSettings = new ReportGeneratorSettings
@@ -93,7 +93,7 @@ Task("Test")
         var summaryDirectory = Directory("./coverage");
         var summarySettings = new ReportGeneratorSettings
         {
-           ArgumentCustomization = args => args.Append($"-reportTypes:MarkDownSummary;Cobertura")
+           ArgumentCustomization = args => args.Append($"-reportTypes:MarkdownSummaryGithub;Cobertura")
         };
         ReportGenerator(glob, summaryDirectory, summarySettings);
       }
