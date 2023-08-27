@@ -1,5 +1,5 @@
 #addin nuget:?package=Cake.Coverlet&version=3.0.4
-#tool dotnet:?package=dotnet-reportgenerator-globaltool&version=5.1.19
+#tool dotnet:?package=dotnet-reportgenerator-globaltool&version=5.1.24
 
 var target = Argument("target", "Default");
 var configuration = Argument("configuration", "Release");
@@ -93,7 +93,7 @@ Task("Test")
         var summaryDirectory = Directory("./coverage");
         var summarySettings = new ReportGeneratorSettings
         {
-           ArgumentCustomization = args => args.Append($"-reportTypes:MarkdownSummaryGithub;Cobertura")
+           ArgumentCustomization = args => args.Append($"-reportTypes:Html;MarkdownSummaryGithub")
         };
         ReportGenerator(glob, summaryDirectory, summarySettings);
       }
