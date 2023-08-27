@@ -1,6 +1,6 @@
 
-using BoltPay.Networking;
-using BoltPay.Pay;
+using PayBolt.Networking;
+using PayBolt.Pay;
 using PayBolt.Lightning;
 
 namespace PayBolt;
@@ -32,7 +32,7 @@ public interface ILightningClient
     /// </summary>
     /// <param name="paymentRequest"></param>
     /// <returns>PaymentResponse</returns>
-    Task<PaymentResponse> Pay(string paymentRequest);
+    Task<Payment> Pay(string paymentRequest);
     
     
     

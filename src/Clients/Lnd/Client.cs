@@ -1,8 +1,8 @@
 using System.Globalization;
-using BoltPay;
-using BoltPay.Clients.Lnd.Contracts.v1.Responses;
-using BoltPay.Networking;
-using BoltPay.Pay;
+using PayBolt;
+using PayBolt.Clients.Lnd.Contracts.v1.Responses;
+using PayBolt.Networking;
+using PayBolt.Pay;
 using PayBolt.Authentication;
 using PayBolt.Clients.Lnd.Contracts.v1.Requests;
 using PayBolt.Clients.Lnd.Contracts.v1.Responses;
@@ -84,7 +84,7 @@ public class Client : RestServiceBase, ILightningClient
         throw new NotImplementedException();
     }
 
-    public Task<PaymentResponse> Pay(string paymentRequest)
+    public Task<Payment> Pay(string paymentRequest)
     {
         throw new NotImplementedException();
     }

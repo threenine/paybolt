@@ -1,0 +1,39 @@
+name: nuget-build-deploy
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 7.0.x
+      - name: Check out Code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Run cake
+        shell : bash
+        env:
+          NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          dotnet new tool-manifest
+          dotnet tool install Cake.Tool
+          dotnet tool restore
+          dotnet cake
+      - name: Create check run with code coverage Markdown report
+        uses: LouisBrunner/checks-action@v1.2.0
+        if: always()
+        with:
+          token: ${{ github.token }}
+          name: Code coverage
+          conclusion: ${{ job.status }}
+          output: '{"summary":"Code coverage"}'
+          output_text_description_file: coverage/Summary.md

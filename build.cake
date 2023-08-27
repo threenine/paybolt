@@ -1,5 +1,4 @@
 #addin nuget:?package=Cake.Coverlet&version=3.0.4
-#addin nuget:?package=Cake.AzureDevOps&version=3.0.0
 #tool dotnet:?package=dotnet-reportgenerator-globaltool&version=5.1.19
 
 var target = Argument("target", "Default");
@@ -8,9 +7,9 @@ const string TEST_COVERAGE_OUTPUT_DIR = "coverage";
 Task("Clean")
     .Does(() => {
  
-    if (BuildSystem.AzurePipelines.IsRunningOnAzurePipelines)
+    if (BuildSystem.GitHubActions.IsRunningOnGitHubActions)
     {
-      Information("Nothing to clean on Azure Pipelines.");
+      Information("Nothing to clean GitHubActions.");
     }
     else
     {
@@ -84,22 +83,19 @@ Task("Test")
      
       var reportSettings = new ReportGeneratorSettings
       {
-         ArgumentCustomization = args => args.Append($"-reportTypes:HtmlInline_AzurePipelines;Cobertura")
+         ArgumentCustomization = args => args.Append($"-reportTypes:Html;Cobertura")
       };
          
       ReportGenerator(glob, outputDirectory, reportSettings);
           
-      if (BuildSystem.AzurePipelines.IsRunningOnAzurePipelines)
+      if (BuildSystem.GitHubActions.IsRunningOnGitHubActions)
       {
-        var coverageFile = $"coverage/reports/Cobertura.xml";
-        var coverageData = new AzurePipelinesPublishCodeCoverageData
+        var summaryDirectory = Directory("./coverage");
+        var summarySettings = new ReportGeneratorSettings
         {
-          CodeCoverageTool = AzurePipelinesCodeCoverageToolType.Cobertura,
-          SummaryFileLocation = coverageFile,
-          ReportDirectory = "coverage/reports"
+           ArgumentCustomization = args => args.Append($"-reportTypes:MarkDownSummary;Cobertura")
         };
-        Information($"Publishing Test Coverage : {coverageFile}");
-        BuildSystem.AzurePipelines.Commands.PublishCodeCoverage(coverageData);
+        ReportGenerator(glob, summaryDirectory, summarySettings);
       }
 });
 

@@ -1,5 +1,5 @@
 using System.ComponentModel;
-using BoltPay;
+using PayBolt;
 using Shouldly;
 
 namespace PayBolt;

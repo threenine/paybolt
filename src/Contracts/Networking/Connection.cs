@@ -1,4 +1,4 @@
-namespace BoltPay.Networking;
+namespace PayBolt.Networking;
 
 public class Connection
 {

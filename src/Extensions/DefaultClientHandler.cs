@@ -1,5 +1,5 @@
 ﻿using System.Diagnostics;
-using BoltPay;
+using PayBolt;
 using PayBolt.Http;
 
 

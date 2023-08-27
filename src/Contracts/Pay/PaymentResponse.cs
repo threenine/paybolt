@@ -1,16 +1,16 @@
-namespace BoltPay.Pay;
+namespace PayBolt.Pay;
 
-public class PaymentResponse
+public class Payment
 {
     public Result Result { get; set; }
     public string Error { get; set; }
 
-    public PaymentResponse(Result result)
+    public Payment(Result result)
     {
         Result = result;
     }
 
-    public PaymentResponse(Result result, string error)
+    public Payment(Result result, string error)
     {
         Result = result;
         Error = error;

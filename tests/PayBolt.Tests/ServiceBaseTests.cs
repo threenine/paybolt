@@ -1,4 +1,4 @@
-namespace BoltPay.Tests;
+namespace PayBolt.Tests;
 
 public class ServiceBaseTests
 {

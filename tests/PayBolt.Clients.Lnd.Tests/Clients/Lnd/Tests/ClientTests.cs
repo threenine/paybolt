@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel;
 using System.Net;
 using System.Text.Json;
-using BoltPay;
+using PayBolt;
 using PayBolt.Authentication;
-using BoltPay.Clients.Lnd.Contracts.v1.Responses;
+using PayBolt.Clients.Lnd.Contracts.v1.Responses;
 using FizzWare.NBuilder;
 using Moq;
 using Moq.Protected;

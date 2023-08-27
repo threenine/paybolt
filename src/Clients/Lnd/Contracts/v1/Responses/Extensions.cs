@@ -1,4 +1,4 @@
-using BoltPay;
+using PayBolt;
 using PayBolt.DependencyInjection;
 using PayBolt.Lightning;
 

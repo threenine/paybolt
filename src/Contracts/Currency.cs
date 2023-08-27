@@ -1,4 +1,4 @@
-using BoltPay;
+using PayBolt;
 
 namespace PayBolt;
 

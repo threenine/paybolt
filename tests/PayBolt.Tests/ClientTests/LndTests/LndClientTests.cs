@@ -1,14 +1,14 @@
 /*using System.ComponentModel;
 using System.Net;
 using System.Text.Json;
-using BoltPay.Exceptions;
-using BoltPay.Lnd;
-using BoltPay.Lnd.Responses;
+using PayBolt.Exceptions;
+using PayBolt.Lnd;
+using PayBolt.Lnd.Responses;
 using Moq;
 using Moq.Protected;
 using Shouldly;
 
-namespace BoltPay.Tests.ClientTests.LndTests;
+namespace PayBolt.Tests.ClientTests.LndTests;
 
 public class LndClientTests
 {

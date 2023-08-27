@@ -1,4 +1,4 @@
-namespace BoltPay;
+namespace PayBolt;
 
 /// <summary>
 /// Provides the result of a connection attempt.
