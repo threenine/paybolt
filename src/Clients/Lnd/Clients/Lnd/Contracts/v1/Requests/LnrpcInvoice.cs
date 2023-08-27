@@ -11,10 +11,10 @@ public class LnrpcInvoice
     public byte[] Receipt { get; set; }
 
     [JsonPropertyName("r_preimage")]
-    public byte[] R_preimage { get; set; }
+    public byte[] RPreimage { get; set; }
 
     [JsonPropertyName("r_hash")]
-    public byte[] R_hash { get; set; }
+    public byte[] RHash { get; set; }
 
     [JsonPropertyName("value")]
     public string Value { get; set; }
@@ -26,27 +26,27 @@ public class LnrpcInvoice
     public bool? Settled { get; set; }
 
     [JsonPropertyName("creation_date")]
-    public string Creation_date { get; set; }
+    public string CreationDate { get; set; }
 
     [JsonPropertyName("settle_date")]
-    public string Settle_date { get; set; }
+    public string SettleDate { get; set; }
 
     [JsonPropertyName("payment_request")]
-    public string Payment_request { get; set; }
+    public string PaymentRequest { get; set; }
 
     [JsonPropertyName("description_hash")]
-    public byte[] Description_hash { get; set; }
+    public byte[] DescriptionHash { get; set; }
 
     [JsonPropertyName("expiry")]
     public string Expiry { get; set; }
 
 
     [JsonPropertyName("fallback_addr")]
-    public string Fallback_addr { get; set; }
+    public string FallbackAddress { get; set; }
 
 
     [JsonPropertyName("cltv_expiry")]
-    public string Cltv_expiry { get; set; }
+    public string CltvExpiry { get; set; }
 
     [JsonPropertyName("private")]
     public bool? Private { get; set; }
