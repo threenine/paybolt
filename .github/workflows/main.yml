@@ -27,7 +27,7 @@ jobs:
           dotnet new tool-manifest
           dotnet tool install Cake.Tool
           dotnet tool restore
-          dotnet cake
+          dotnet cake build.cake
       - name: Create check run with code coverage Markdown report
         uses: LouisBrunner/checks-action@v1.2.0
         if: always()

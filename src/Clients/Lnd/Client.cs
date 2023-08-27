@@ -1,14 +1,12 @@
 using System.Globalization;
-using PayBolt;
-using PayBolt.Clients.Lnd.Contracts.v1.Responses;
-using PayBolt.Networking;
-using PayBolt.Pay;
 using PayBolt.Authentication;
 using PayBolt.Clients.Lnd.Contracts.v1.Requests;
 using PayBolt.Clients.Lnd.Contracts.v1.Responses;
 using PayBolt.DependencyInjection;
 using PayBolt.Exceptions;
 using PayBolt.Lightning;
+using PayBolt.Networking;
+using PayBolt.Pay;
 
 namespace PayBolt.Clients.Lnd;
 
