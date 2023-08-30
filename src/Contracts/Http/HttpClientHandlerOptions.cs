@@ -2,7 +2,7 @@ namespace PayBolt.Http;
 
 public class HttpClientHandlerOptions
 {
-    public bool EnableSecure { get; set; }
+    public bool EnableSecure { get; init; }
 
-    public byte[] ThumbPrint { get; set; }
+    public byte[] ThumbPrint { get; init; }
 }

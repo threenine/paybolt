@@ -4,8 +4,7 @@ namespace PayBolt;
 
 public class Currency : IComparable, IComparable<Currency>, IEquatable<Currency>
 {
-    
-    public long Value { get; }
+    private long Value { get; }
 
     public Currency(decimal amount, Unit unit)
     {
