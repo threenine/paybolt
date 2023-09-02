@@ -11,11 +11,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Setup .NET
-        uses: actions/setup-dotnet@v1
+        uses: actions/setup-dotnet@v3
         with:
           dotnet-version: 7.0.x
       - name: Check out Code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
       - name: Run cake
@@ -29,11 +29,11 @@ jobs:
           dotnet tool restore
           dotnet cake build.cake
       - name: Create check run with code coverage Markdown report
-        uses: LouisBrunner/checks-action@v1.2.0
+        uses: LouisBrunner/checks-action@v1.6.2
         if: always()
         with:
           token: ${{ github.token }}
           name: Code coverage
           conclusion: ${{ job.status }}
-          output: '{"summary":"Code coverage"}'
+          output: '{"summary":"Code Coverage"}'
           output_text_description_file: coverage/SummaryGithub.md
